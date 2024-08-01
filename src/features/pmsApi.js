@@ -10,7 +10,7 @@ export const pmsApi = createApi({
         return headers;
     }
     }),
-    tagTypes: ['Department','Client'],
+    tagTypes: ['Department','Client','Project'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
@@ -110,6 +110,20 @@ export const pmsApi = createApi({
                 method: "GET",
             }),
         }),
+        'projects': builder.query({
+            query: (param) => ({
+                url: `/projects?search=${param.search}&page=${param.page}`,
+                method: "GET",
+            }),
+            providesTags: ['Project']
+        }),
+        'deleteProject': builder.mutation({
+            query: (id) => ({
+                url: `/projects/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['Project']
+        }),
     })
 });
 
@@ -125,6 +139,8 @@ export const {
     useClientDepartmentsQuery,
     useCreateClientMutation,
     useEditClientMutation,
-    useFindClientQuery
+    useFindClientQuery,
+    useProjectsQuery,
+    useDeleteProjectMutation
 } = pmsApi;
 

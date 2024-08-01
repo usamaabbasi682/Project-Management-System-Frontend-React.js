@@ -326,7 +326,7 @@ const DashDefault = () => {
               <div className="row align-items-center justify-content-center card-active">
                 <div className="col-6">
                   <h6 className="text-center m-b-10">
-                    <span className="text-muted m-r-5">Target:</span>35,098
+                    <span className="text-muted m-r-5">Target:</span>35,000
                   </h6>
                   <div className="progress">
                     <div

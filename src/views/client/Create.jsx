@@ -3,14 +3,14 @@ import { Row, Col } from 'react-bootstrap';
 
 import Card from '../../components/Card/MainCard';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import useUserNotLogin from 'hooks/useUserNotLogin';
 import { useClientDepartmentsQuery, useCreateClientMutation } from 'features/pmsApi';;
-import 'react-quill/dist/quill.snow.css';
-import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import 'react-quill/dist/quill.snow.css';
+import ImagePreview from 'views/common/ImagePreview';
+import * as Yup from 'yup';
 
 const Create = () => {
     useUserNotLogin();
@@ -169,7 +169,8 @@ const Create = () => {
                                       formik.setFieldValue('profile', event.currentTarget.files[0]);
                                   }} className="form-control" name="profile" />
                                 <ErrorMessage name="profile" component="small" className="text-danger" />
-                            </div>
+                        </div>
+                        <ImagePreview data={{  }} loadingText={''} file={formik.values.profile} />
                         <div className="form-group mt-3">
                           <button type="submit" disabled={formik.isSubmitting} className="btn btn-sm btn-primary">
                             {isLoading ? 'Loading...' : 'Submit'}

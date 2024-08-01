@@ -3,14 +3,14 @@ import { Row, Col } from 'react-bootstrap';
 
 import Card from '../../components/Card/MainCard';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import ReactQuill from 'react-quill';
 import { Link, useParams } from 'react-router-dom';
 import useUserNotLogin from 'hooks/useUserNotLogin';
-import { useClientDepartmentsQuery, useEditClientMutation, useFindClientQuery } from 'features/pmsApi';;
-import 'react-quill/dist/quill.snow.css';
-import * as Yup from 'yup';
+import { useClientDepartmentsQuery, useEditClientMutation, useFindClientQuery } from 'features/pmsApi';
 import { toast, ToastContainer } from 'react-toastify';
+import ImagePreview from 'views/common/ImagePreview';
+import 'react-quill/dist/quill.snow.css';
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from 'yup';
 
 const Edit = () => {
   useUserNotLogin();
@@ -20,7 +20,6 @@ const Edit = () => {
     const departments = useClientDepartmentsQuery();
     const clientRef = useRef();
     const [passwordCount, setPasswordCount] = useState(0);
-    const [preview, setPreview] = useState(null);
 
     const initialValues = {
         name: data?.data?.name,
@@ -31,16 +30,6 @@ const Edit = () => {
         password: '',
         confirm_password: '',
     };
-
-    const handleImageChange = (file) => {
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
 
     const validationSchema = (data) => {
         const validate = Yup.object({
@@ -163,21 +152,10 @@ const Edit = () => {
                                 <label htmlFor="profile">Profile</label>
                                   <Field type="file" value={undefined} onChange={(event) => {
                                       formik.setFieldValue('profile', event.currentTarget.files[0]);
-                                      handleImageChange(event.currentTarget.files[0]);
                                   }} className="form-control" name="profile" />
                                 <ErrorMessage name="profile" component="small" className="text-danger" />
                               </div>
-                              <Row className='mt-3'>
-                                  <Col md={2}>
-                            {
-                              preview != null ?
-                                  <img src={preview} className='img-fluid  rounded' alt="Preview"/> :
-                                  data?.data?.profile_image
-                                  ? <><img src={data?.data?.profile_image} className="img-fluid  rounded" alt="profile" /></>
-                                  : 'Loading...'
-                            }
-                                    </Col>
-                              </Row>
+                        <ImagePreview data={data} file={formik.values.profile} loadingText={'Loading...'} />
                         <div className="form-group mt-3">
                           <button type="submit" disabled={formik.isSubmitting} className="btn btn-sm btn-primary">
                             {updateObj.isLoading ? 'Loading...' : 'Update'}

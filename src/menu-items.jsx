@@ -62,6 +62,14 @@ const menuItems = {
           url: '/clients/:id/edit',
           display:false
         },
+        {
+          id: 'projects',
+          title: 'Projects',
+          type: 'item',
+          icon: 'feather icon-file-text',
+          url: '/projects',
+          display:true
+        },
       ]
     },
     {
