@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import {
-  useDeleteDepartmentMutation,
   useDeleteProjectMutation,
-  useDepartmentsQuery,
   useProjectsQuery,
 } from "features/pmsApi";
 import { Link } from "react-router-dom";
@@ -41,7 +39,7 @@ const Projects = () => {
           <Search search={search} setSearch={setSearch} />
         </Col>
         <Col xl={6} xxl={9} className="text-end">
-          <Link to="#" className="btn btn-primary btn-sm">
+          <Link to="/projects/create" className="btn btn-primary btn-sm">
             New Project <i className="feather icon-plus-circle" />
           </Link>
         </Col>

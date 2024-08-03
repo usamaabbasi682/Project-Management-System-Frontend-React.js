@@ -81,7 +81,7 @@ export const pmsApi = createApi({
         }),
         'clientDepartments': builder.query({
             query: () => ({
-                url: `/clients/departments`,
+                url: `/department/options`,
                 method: "GET",
             }),
         }),
@@ -124,6 +124,18 @@ export const pmsApi = createApi({
             }),
             invalidatesTags: ['Project']
         }),
+        'clientOptions': builder.query({
+            query: () => ({
+                url: `/client/options`,
+                method: "GET",
+            }),
+        }),
+        'userOptions': builder.query({
+            query: () => ({
+                url: `/users/options`,
+                method: "GET",
+            }),
+        })
     })
 });
 
@@ -141,6 +153,8 @@ export const {
     useEditClientMutation,
     useFindClientQuery,
     useProjectsQuery,
-    useDeleteProjectMutation
+    useDeleteProjectMutation,
+    useClientOptionsQuery,
+    useUserOptionsQuery
 } = pmsApi;
 

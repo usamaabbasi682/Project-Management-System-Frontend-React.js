@@ -70,6 +70,22 @@ const menuItems = {
           url: '/projects',
           display:true
         },
+        {
+          id: 'projects_create',
+          title: 'Create Project',
+          type: 'item',
+          icon: 'feather icon-users',
+          url: '/projects/create',
+          display:false
+        },
+        {
+          id: 'project_edit',
+          title: 'Edit Project',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/projects/:id/edit',
+          display:false
+        },
       ]
     },
     {

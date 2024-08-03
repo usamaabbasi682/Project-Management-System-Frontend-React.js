@@ -34,14 +34,15 @@ const LoginInput = () => {
 
   useEffect(() => {
     if (data?.success) {
-      formikRef?.current?.setSubmitting(false);
-      formikRef?.current?.resetForm();
-      recaptchaRef.current.reset();
-      sessionStorage.setItem('token', data?.token);
-      sessionStorage.setItem('user', JSON.stringify(data?.data));
-      navigate('/dashboard');
+        formikRef?.current?.setSubmitting(false);
+        formikRef?.current?.resetForm();
+        recaptchaRef.current.reset();
+        sessionStorage.setItem('token', data?.token);
+        sessionStorage.setItem('user', JSON.stringify(data?.data));
+        navigate('/dashboard');
     } else {
       formikRef?.current?.setSubmitting(false);
+      recaptchaRef.current.reset();
       setLoginError(data?.message);
     }
   }, [data]);

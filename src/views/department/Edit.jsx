@@ -60,11 +60,13 @@ const Edit = () => {
                     <>
                       <Form>
                         <div className="form-group">
-                          <label htmlFor="name">Department Name</label>
+                          <label htmlFor="name">
+                            Name<span className="text-danger"><b>*</b></span>
+                          </label>
                           <Field type="text" className="form-control" name="name" placeholder="Enter department name" />
                           <ErrorMessage name="name" component="small" className="text-danger" />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group mt-3">
                           <label htmlFor="description">Description</label>
                           <ReactQuill theme="snow" className="form-control" name="description" value={formik.values.description} onChange={value => formik.setFieldValue('description', value)} />
                           <ErrorMessage name="description" component="small" className="text-danger" />
@@ -75,10 +77,10 @@ const Edit = () => {
                         </div>
                         <div className="form-group mt-3">
                           <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="btn btn-sm btn-primary">
-                            {updateObj.isLoading ? 'Loading...' : 'Update'}
+                            {updateObj.isLoading ? 'Loading...' : 'Save'}
                           </button>
                           <Link to="/departments" className="btn btn-sm btn-danger ml-2">
-                            Go-Back 
+                            Go Back 
                           </Link>
                         </div>
                       </Form>
