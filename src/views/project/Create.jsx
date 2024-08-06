@@ -5,7 +5,7 @@ import Card from '../../components/Card/MainCard';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 import useUserNotLogin from 'hooks/useUserNotLogin';
-import { useCreateDepartmentMutation, useClientOptionsQuery,useUserOptionsQuery } from 'features/pmsApi';;
+import { useClientOptionsQuery,useUserOptionsQuery, useCreateProjectMutation } from 'features/pmsApi';;
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -14,10 +14,10 @@ import makeAnimated from 'react-select/animated';
 
 const Create = () => {
     useUserNotLogin();
-    const [createDepartment, { data, isLoading }] = useCreateDepartmentMutation();
+    const [createProject, { data, isLoading }] = useCreateProjectMutation();
     const clients = useClientOptionsQuery();
     const users = useUserOptionsQuery();
-    const departmentRef = useRef();
+    const projectRef = useRef();
     const animatedComponents = makeAnimated();
 
     const initialValues = {
@@ -30,7 +30,6 @@ const Create = () => {
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required').max(150, 'Name must be less than 150 characters'),
-        // Allow only number and alphabets
         prefix: Yup.string().required('Prefix is required').matches(/^[a-zA-Z0-9]+$/, 'Prefix must be alphanumeric').max(8, 'Prefix must be less than 8 characters'),
         client: Yup.string().required('Client is required'),
         color: Yup.string().required('Color is required'),
@@ -38,19 +37,30 @@ const Create = () => {
     });
 
     const handleSubmit = (values, formik) => {
-        console.log(values);
-        
-        // createDepartment(values);
-        // departmentRef.current = formik;
+        const users = values.users;
+        const formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('prefix', values.prefix);
+        formData.append('client_id', values.client);
+        formData.append('color', values.color);
+
+        if (users.length != 0) {
+            users.forEach((user) => {
+                formData.append('users[]', user.value);
+            });
+        }
+
+        createProject(formData);
+        projectRef.current = formik;
     };
 
     useEffect(() => {
         if (data?.success) {
-            departmentRef?.current?.setSubmitting(false);
-            departmentRef?.current?.resetForm();
-            toast.success("Department Created Successfully", {position: "top-right"});
+            projectRef?.current?.setSubmitting(false);
+            projectRef?.current?.resetForm();
+            toast.success("Project Created Successfully", {position: "top-right"});
         } else {
-            departmentRef?.current?.setSubmitting(false);
+            projectRef?.current?.setSubmitting(false);
         }
     }, [data]);
     
@@ -139,7 +149,7 @@ const Create = () => {
                                                                 onChange={(selectedOptions) => {
                                                                     formik.setFieldValue('users', selectedOptions);
                                                                 }}
-                                                                // value={formik.values.users}
+                                                                value={formik.values.users}
                                                                 name="users"
                                                             />
                                                             <ErrorMessage name="users" component="small" className="text-danger" />

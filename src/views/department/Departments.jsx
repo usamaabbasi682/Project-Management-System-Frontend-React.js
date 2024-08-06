@@ -57,8 +57,8 @@ const Departments = () => {
                             <h3 className="f-w-300 d-flex align-items-center m-b-0"> {department.name}</h3>
                         </div>
                         <div className="col-12 text-end mt-3">
-                          <Link to={`/departments/${department.id}/edit`} className='btn btn-sm btn-square btn-info text-capitalize'>Edit</Link>
-                          <Button type='button' onClick={()=>{deleteRow(department.id)}} className="btn btn-sm btn-square btn-danger text-capitalize">Delete</Button>
+                          <Link to={`/departments/${department.id}/edit`} className='btn btn-sm btn-info text-capitalize'>Edit</Link>
+                          <Button type='button' onClick={()=>{deleteRow(department.id)}} className="btn btn-sm btn-danger text-capitalize">Delete</Button>
                         </div>
                       </div>
                     </Card.Body>

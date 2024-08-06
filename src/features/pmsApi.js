@@ -135,7 +135,32 @@ export const pmsApi = createApi({
                 url: `/users/options`,
                 method: "GET",
             }),
-        })
+        }),
+        'createProject': builder.mutation({
+            query: (data) => ({
+                url: "/projects",
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Project']
+        }),
+        'editProject': builder.mutation({
+            query: (object) => {
+                const url = `/projects/${object.id}?_method=PUT`;            
+                return {
+                    url: url,
+                    method: "POST",
+                    body: object.data
+                };
+            },
+            invalidatesTags: ['Project']
+        }),
+        'findProject': builder.query({
+            query: (id) => ({
+                url: `/projects/${id}`,
+                method: "GET",
+            }),
+        }),
     })
 });
 
@@ -155,6 +180,9 @@ export const {
     useProjectsQuery,
     useDeleteProjectMutation,
     useClientOptionsQuery,
-    useUserOptionsQuery
+    useUserOptionsQuery,
+    useCreateProjectMutation,
+    useEditProjectMutation,
+    useFindProjectQuery,
 } = pmsApi;
 

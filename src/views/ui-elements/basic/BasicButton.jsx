@@ -49,7 +49,7 @@ const BasicButton = () => {
     return (
       <DropdownButton
         className="text-capitalize"
-        title={title}
+        // title={title}
         variant={button.variant}
         id={`dropdown-variants-${button.variant}`}
         key={button.variant}

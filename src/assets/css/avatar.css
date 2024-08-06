@@ -1,0 +1,22 @@
+
+.avatar-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+    /* Optional: adds a border to avatars */
+    color: white;
+    /* Optional: adds a background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -10px;
+    /* Overlaps avatars */
+}

@@ -87,8 +87,8 @@ const Clients = () => {
                                 <p className="f-w-300 d-flex align-items-center m-b-0" style={{ paddingLeft: '67px' }}> {client.email}</p>
                             </div>
                             <div className="col-12 text-end mt-3">
-                            <Link to={`/clients/${client.id}/edit`} className='btn btn-sm btn-square btn-info text-capitalize'>Edit</Link>
-                            <Button type='button' onClick={()=>{deleteRow(client.id)}} className="btn btn-sm btn-square btn-danger text-capitalize">Delete</Button>
+                            <Link to={`/clients/${client.id}/edit`} className='btn btn-sm btn-info text-capitalize'>Edit</Link>
+                            <Button type='button' onClick={()=>{deleteRow(client.id)}} className="btn btn-sm btn-danger text-capitalize">Delete</Button>
                             </div>
                         </div>
                         </Card.Body>
