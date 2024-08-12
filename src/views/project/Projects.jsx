@@ -64,11 +64,15 @@ const Projects = () => {
                       </div>
                     </div>
                   </Card.Body>
-                  <Card.Body className="border-top border-bottom">
+                  <Card.Body className="border-top border-bottom pb-2">
                     <div className="row">
                       <span>SR#: {project.id} | {project.created_at}</span>
-                      <div className="col-12 mt-2">
-                        <h5 style={{ fontWeight:'bolder' }} className="f-w-300 d-flex align-items-center m-b-0"> <span style={{ fontSize:'12px' }}>({project.prefix})</span>&nbsp;{project.name}</h5>
+                      <div className="col-12 mt-2 mb-1">
+                        <h5 style={{ fontWeight: 'bolder' }} className="f-w-300 d-flex align-items-center m-b-0">
+                          <Link to={`/projects/${project.id}`} className="text-dark">
+                            <span style={{ fontSize: '12px' }}>({project.prefix})</span>&nbsp;{project.name}
+                          </Link>
+                        </h5>
                       </div>
                       <div className="col-4 text-start mt-3">
                         <span className="project-badge" style={projectBadgeColor}>{project.status_modified}</span>
@@ -77,7 +81,7 @@ const Projects = () => {
                         <h6><span style={{ fontWeight: 'bolder' }}>0</span> Pending Task(s)</h6>
                         <h6 className="text-c-blue mb-0"><span className="text-muted">Client: {project.client}</span></h6>
                       </div>
-                      <div className="avatar-group">
+                      <div className="avatar-group mt-3">
                         {/* <AvatarGroup key={index} avatar={user.avatar} name={user.name} total={project.users.length} index={index} /> */}
                         {project?.users != '' ? project?.users?.map?.((user, index) => (
                           <Avatar key={user.id} name={user.name} />

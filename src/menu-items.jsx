@@ -86,6 +86,14 @@ const menuItems = {
           url: '/projects/:id/edit',
           display:false
         },
+        {
+          id: 'project_view',
+          title: 'View Project',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/projects/:id',
+          display:false
+        },
       ]
     },
     {

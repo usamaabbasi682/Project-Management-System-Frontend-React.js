@@ -1,0 +1,43 @@
+/* Hide the default file input */
+.file-upload input[type="file"] {
+    display: none;
+}
+
+/* Container for the file upload */
+.file-upload {
+    position: relative;
+    width: 100%;
+}
+
+/* Style the label to be full-width with padding and transparent background */
+.file-upload .file-label {
+    display: block;
+    width: 100%;
+    padding: 50px;
+    font-size: 16px;
+    color: #333;
+    /* Text color, adjust as needed */
+    background-color: transparent;
+    /* Transparent background */
+    border: 2px dashed rgba(0, 123, 255, 0.5);
+    /* Dashed border with transparency */
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    /* Ensure padding is included in the total width */
+    transition: border-color 0.3s ease;
+}
+
+/* Change border color on hover */
+.file-upload .file-label:hover {
+    border-color: rgba(0, 123, 255, 0.7);
+    /* Darker dashed border on hover */
+}
+
+/* Style for file name display (optional) */
+.file-upload .file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}

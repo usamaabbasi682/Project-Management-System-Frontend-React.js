@@ -161,6 +161,24 @@ export const pmsApi = createApi({
                 method: "GET",
             }),
         }),
+        'projectFileUpload': builder.mutation({
+            query: (file) => ({
+                url: `/projects/${file.id}/file`,
+                method: "POST",
+                body: file.files
+            }),
+            invalidatesTags: ['Project']
+        }),
+        'projectFileDelete': builder.mutation({
+            query: (data) => {
+                const url = `/projects/${data.project}/files/${data.file}`;
+                return {
+                    url: url,
+                    method: "DELETE",
+                };
+            },
+            invalidatesTags: ['Project']
+        })
     })
 });
 
@@ -184,5 +202,7 @@ export const {
     useCreateProjectMutation,
     useEditProjectMutation,
     useFindProjectQuery,
+    useProjectFileUploadMutation,
+    useProjectFileDeleteMutation,
 } = pmsApi;
 
