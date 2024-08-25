@@ -94,6 +94,14 @@ const menuItems = {
           url: '/projects/:id',
           display:false
         },
+        {
+          id: 'task_view',
+          title: 'Task Project',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/projects/:projectId/tasks/:taskId',
+          display:false
+        },
       ]
     },
     {

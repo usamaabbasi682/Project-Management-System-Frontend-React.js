@@ -6,7 +6,7 @@
     position: relative;
     margin-right: 5px;
     margin-bottom: 5px;
-    /* background-color: #db5383; */
+    background-color: #db5383;
     color: white;
     font-size: 12px;
 }
@@ -16,3 +16,83 @@ item:active {
     text-decoration: none;
     background-color: #ffffff !important;
 }
+
+/* Radio button styling */
+.wrapper {
+    width: 100%;
+    margin-top: 29px;
+    box-sizing: border-box;
+    display: inline-flex;
+    background: #fff;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
+}
+
+.wrapper .option {
+    background: #fff;
+    width: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border: 1px solid lightgrey;
+    transition: all 0.3s ease;
+}
+
+.wrapper .option .dot {
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+
+.wrapper .option .dot::before {
+    position: absolute;
+    content: "";
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    background: #04a9f5;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+#option-1:checked:checked~.option-1,
+#option-2:checked:checked~.option-2 {
+    border-color: #04a9f5;
+    background: #04a9f5;
+}
+
+#option-1:checked:checked~.option-1 .dot,
+#option-2:checked:checked~.option-2 .dot {
+    background: #fff;
+}
+
+#option-1:checked:checked~.option-1 .dot::before,
+#option-2:checked:checked~.option-2 .dot::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.wrapper .option span {
+    font-size: 14px;
+    color: #808080;
+}
+
+#option-1:checked:checked~.option-1 span,
+#option-2:checked:checked~.option-2 span {
+    color: #fff;
+}
+/* End radio button styling */

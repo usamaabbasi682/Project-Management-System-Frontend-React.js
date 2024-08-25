@@ -10,7 +10,7 @@ export const pmsApi = createApi({
         return headers;
     }
     }),
-    tagTypes: ['Department','Client','Project'],
+    tagTypes: ['Department','Client','Project', 'Task'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
@@ -178,7 +178,53 @@ export const pmsApi = createApi({
                 };
             },
             invalidatesTags: ['Project']
+        }),
+        'tagOptions': builder.query({
+            query: () => ({
+                url: `/tags/options`,
+                method: "GET",
+            }),
+        }),
+        'tasks': builder.query({
+            query:(id) => `/projects/${id}/tasks`,
+        }),
+        'viewTask': builder.query({
+            query:(data) => `/projects/${data.projectId}/tasks/${data.taskId}`,
+        }),
+        'createTask': builder.mutation({
+            query: (data) => {
+                const url = `/projects/${data.id}/tasks`;
+                return {
+                    url: url,
+                    method: "POST",
+                    body: data.task
+                };
+            }
+        }),
+        'taskComments': builder.query({
+            query:(data) => `/projects/${data.projectId}/tasks/${data.taskId}/comments`,
+        }),
+        'createTaskComment': builder.mutation({
+            query: (data) => ({
+                url: `/projects/${data.projectId}/tasks/${data.taskId}/comments`,
+                method: "POST",
+                body: data.comment
+            })
+        }),
+        'editTaskComment': builder.mutation({
+            query: (data) => ({
+                url: `/projects/${data.projectId}/tasks/${data.taskId}/comments/${data.commentId}/update`,
+                method: "POST",
+                body: data.comment
+            })
+        }),
+        'deleteTaskComment': builder.mutation({
+            query: (data) => ({
+                url: `/projects/${data.projectId}/tasks/${data.taskId}/comments/${data.commentId}/delete`,
+                method: "DELETE",
+            })
         })
+
     })
 });
 
@@ -204,5 +250,13 @@ export const {
     useFindProjectQuery,
     useProjectFileUploadMutation,
     useProjectFileDeleteMutation,
+    useTagOptionsQuery,
+    useTasksQuery,
+    useCreateTaskMutation,
+    useViewTaskQuery,
+    useTaskCommentsQuery,
+    useCreateTaskCommentMutation,
+    useDeleteTaskCommentMutation,
+    useEditTaskCommentMutation
 } = pmsApi;
 

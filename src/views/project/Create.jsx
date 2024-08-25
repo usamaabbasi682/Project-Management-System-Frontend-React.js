@@ -137,7 +137,7 @@ const Create = () => {
                                                     </Col>
                                                     <Col md={12} className='mt-3'>
                                                         <div className="form-group">
-                                                             <label htmlFor="client">
+                                                             <label htmlFor="users">
                                                                 Users<span className="text-danger"><b>*</b></span>
                                                             </label>
                                                             <Select

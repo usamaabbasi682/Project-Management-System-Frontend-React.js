@@ -6,9 +6,11 @@ const Avatar = ({ name }) => {
   // Extract initials from the name
     const initials = name
         .split(' ')
+        .slice(0, 2)
         .map((word) => word.charAt(0))
         .join('')
         .toUpperCase();
+    
     
     const generateColorFromName = (name) => {
         let hash = 0;
@@ -26,7 +28,7 @@ const Avatar = ({ name }) => {
 
     return (
         <div className="user-item">
-            <div className="avatar" style={{ backgroundColor: generateColorFromName(name) }}>
+            <div title={name} className="avatar" style={{ backgroundColor: generateColorFromName(name) }}>
                 {displayText}
             </div>
         </div>
