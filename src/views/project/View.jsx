@@ -17,12 +17,14 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Tasks from 'views/components/Tasks';
 import Spinner from 'views/common/Spinner';
+import Search from 'views/common/Search';
 
 const View = () => {
     useUserNotLogin();
+    const [search, setSearch] = useState('');
     const {id} = useParams();
     const { data, refetch } = useFindProjectQuery(id);
-    const tasks = useTasksQuery(id);
+    const tasks = useTasksQuery({id:id,search:search});
     const [fileUpload, response] = useProjectFileUploadMutation();
     const users = useUserOptionsQuery();
     const tags = useTagOptionsQuery();
@@ -305,8 +307,20 @@ const View = () => {
                         </Tab>
                         <Tab eventKey="tasks" title="Tasks">
                             <Card style={{'box-shadow':'none'}}>
-                                <Card.Header className='text-end'>
-                                    <Button className='btn btn-sm btn-primary' onClick={() => setIsBasic(!isBasic)}>New Task</Button>
+                                <Card.Header>
+                                    <Row>
+                                        <Col md={3} className='text-start'>
+                                            <div className='form-group d-flex'>
+                                                <Search search={search} setSearch={setSearch} />
+                                                <span style={{ marginLeft: '6px', fontSize: '10px' }} className="mt-2">
+                                                    {tasks.isFetching && search != '' ? <><div className="spinner-border text-info" style={{ width:'19px',height:'19px' }} role="status"></div></> : ''}
+                                                </span>
+                                            </div>
+                                        </Col>
+                                        <Col md={9} className='text-end'>
+                                            <Button className='btn btn-sm btn-primary' onClick={() => setIsBasic(!isBasic)}>New Task</Button>
+                                        </Col>
+                                    </Row>
                                 </Card.Header>
                                 <Collapse in={isBasic}>
                                     <div id="basic-collapse">
@@ -456,7 +470,7 @@ const View = () => {
                                     </div>
                                 </Collapse>
                             </Card>
-                            {!tasks.isFetching ? <Tasks tasks={tasks} /> : <Spinner />}
+                            {!tasks.isLoading ? <Tasks tasks={tasks} /> : <Spinner />}
                         </Tab>
                         <Tab eventKey="attachments" title="Attachments">
                             <Card className="Recent-Users widget-focus-lg">

@@ -10,7 +10,7 @@ export const pmsApi = createApi({
         return headers;
     }
     }),
-    tagTypes: ['Department','Client','Project', 'Task'],
+    tagTypes: ['Department','Client','Project', 'Task','Status'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
@@ -111,10 +111,15 @@ export const pmsApi = createApi({
             }),
         }),
         'projects': builder.query({
-            query: (param) => ({
-                url: `/projects?search=${param.search}&page=${param.page}`,
-                method: "GET",
-            }),
+            query: (param) => {
+                let url = '';
+                if(param.myProjects)
+                url = `/projects?search=${param.search}&projects=${param.myProjects}&page=${param.page}&client=${param.client}&status=${param.status}`;
+                else 
+                url = `/projects?search=${param.search}&page=${param.page}&client=${param.client}&status=${param.status}`;
+                
+                return { url: url, method: "GET" };
+            },
             providesTags: ['Project']
         }),
         'deleteProject': builder.mutation({
@@ -186,7 +191,19 @@ export const pmsApi = createApi({
             }),
         }),
         'tasks': builder.query({
-            query:(id) => `/projects/${id}/tasks`,
+            query: (data) => {
+                let url = `/projects/${data.id}/tasks`;
+
+                if (data.search != '') {
+                    url = `/projects/${data.id}/tasks?search=${data.search}`;
+                }
+                
+                return {
+                    url: url,
+                    method:"GET",
+                };
+            },
+            providesTags: ['Task']
         }),
         'viewTask': builder.query({
             query:(data) => `/projects/${data.projectId}/tasks/${data.taskId}`,
@@ -200,6 +217,20 @@ export const pmsApi = createApi({
                     body: data.task
                 };
             }
+        }),
+        'editTask': builder.mutation({
+            query: (data) => ({
+                url: `/projects/${data.projectId}/tasks/${data.taskId}?_method=PUT`,
+                method: "POST",
+                body: data.task
+            }),
+            invalidatesTags: ['Task']
+        }),
+        'deleteTaskFile': builder.mutation({
+            query: (data) => ({
+                url: `/projects/${data.projectId}/tasks/${data.taskId}/files/${data.fileId}/delete`,
+                method: "DELETE",
+            })
         }),
         'taskComments': builder.query({
             query:(data) => `/projects/${data.projectId}/tasks/${data.taskId}/comments`,
@@ -223,8 +254,48 @@ export const pmsApi = createApi({
                 url: `/projects/${data.projectId}/tasks/${data.taskId}/comments/${data.commentId}/delete`,
                 method: "DELETE",
             })
-        })
-
+        }),
+        'statuses': builder.query({
+            query: (data) => ({
+                url: `/statuses?search=${data.search}&?page=${data.page}`,
+                method: "GET",
+            }),
+            providesTags: ['Status']
+        }),
+        'createStatus': builder.mutation({
+            query: (data) => ({
+                url: `/statuses`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Status']
+        }),
+        'editStatus': builder.mutation({
+            query: (data) => {
+                const url = `/statuses/${data.id}?_method=PUT`;
+                console.log(data);
+                
+                return {
+                    url: url,
+                    method: "POST",
+                    body: data.order
+                };
+            },
+            invalidatesTags: ['Status']
+        }),
+        'deleteStatus': builder.mutation({
+            query: (id) => ({
+                url: `/statuses/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['Status']
+        }),
+        'statusOptions': builder.query({
+            query: () => ({
+                url: `/status/options`,
+                method: "GET",
+            }),
+        }),
     })
 });
 
@@ -253,10 +324,17 @@ export const {
     useTagOptionsQuery,
     useTasksQuery,
     useCreateTaskMutation,
+    useEditTaskMutation,
+    useDeleteTaskFileMutation,
     useViewTaskQuery,
     useTaskCommentsQuery,
     useCreateTaskCommentMutation,
     useDeleteTaskCommentMutation,
-    useEditTaskCommentMutation
+    useEditTaskCommentMutation,
+    useStatusesQuery,
+    useCreateStatusMutation,
+    useDeleteStatusMutation,
+    useEditStatusMutation,
+    useStatusOptionsQuery,
 } = pmsApi;
 

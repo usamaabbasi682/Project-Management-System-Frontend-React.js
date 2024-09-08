@@ -99,8 +99,28 @@ const routes = [
       },
       {
         exact: 'false',
+        path: '/projects/:id',
+        element: lazy(() => import('./views/project/View'))
+      },
+      {
+        exact: 'false',
         path: '/projects/:projectId/tasks/:taskId',
         element: lazy(() => import('./views/project/TaskView'))
+      },
+      {
+        exact: 'false',
+        path: '/projects/:projectId/tasks/:taskId/edit',
+        element: lazy(() => import('./views/project/EditTask'))
+      },
+      {
+        exact: 'false',
+        path: '/tasks',
+        element: lazy(() => import('./views/task/Tasks'))
+      },
+      {
+        exact: 'false',
+        path: '/status',
+        element: lazy(() => import('./views/task/status/Status'))
       },
       {
         exact: 'true',

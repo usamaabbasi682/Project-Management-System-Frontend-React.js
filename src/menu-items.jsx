@@ -102,6 +102,44 @@ const menuItems = {
           url: '/projects/:projectId/tasks/:taskId',
           display:false
         },
+        {
+          id: 'task_edit',
+          title: 'Edit Task',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/projects/:projectId/tasks/:taskId/edit',
+          display:false
+        },
+      ]
+    },
+    {
+      id: 'status-tasks',
+      title: 'STATUS & TASKS',
+      type: 'group',
+      icon: 'icon-group',
+      children: [
+        {
+          id: 'tasks-header',
+          title: 'Tasks',
+          type: 'collapse',
+          icon: 'feather icon-list',
+          children: [
+            {
+              id: 'tasks',
+              title: 'Tasks',
+              type: 'item',
+              url: '/tasks',
+              display:true
+            },
+            {
+              id: 'status',
+              title: 'Status',
+              type: 'item',
+              url: '/status',
+              display:true
+            },
+          ]
+        }
       ]
     },
     {

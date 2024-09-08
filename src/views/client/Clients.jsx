@@ -14,8 +14,8 @@ const Clients = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [department, setDepartment] = useState(null);
-    const { data, isFetching } = useClientsQuery({ search: search, page: page,department:department });
-    const [deleteClient, { isLoading }] = useDeleteClientMutation();
+    const { data, isFetching, isLoading } = useClientsQuery({ search: search, page: page,department:department });
+    const [deleteClient, deleteClientResponse] = useDeleteClientMutation();
     const departments = useClientDepartmentsQuery();
 
     const deleteRow = (id) => {
@@ -25,20 +25,25 @@ const Clients = () => {
     }
 
     useEffect(() => {
-        if (isLoading) {
+        if (deleteClientResponse.isLoading) {
             toast.info("Deleting Client", { position: "top-right" });
         }
-    }, [isLoading]);
+    }, [deleteClientResponse.isLoading]);
 
     return (
         <>
             <ToastContainer />
-            <Row className='mb-4'>
+            <Row className='mb-4 '>
+                <Col md={12} className="text-center mb-3">
+                    <span style={{ marginLeft: '6px', fontSize: '10px' }} className="mt-2">
+                        {isFetching && (search != '' || department != null) ? <><div className="spinner-border text-info" style={{ width:'19px',height:'19px' }} role="status"></div></> : ''}
+                    </span>
+                </Col>
                 <Col xl={6} xxl={3}>
                     <Search search={search} setSearch={setSearch} />
                 </Col>
                 <Col xl={6} xxl={3}>
-                    <select className='form-select form-select-sm' onChange={(e)=> setDepartment(e.target.value) } style={{ fontWeight: 'bold' }}>
+                    <select className='form-select form-select-sm' onChange={(e) => setDepartment(e.target.value)} style={{ fontWeight: 'bold' }}>
                         <option value="">Department</option>
                         {
                             departments?.data?.data?.map?.((department, i) => {
@@ -49,16 +54,17 @@ const Clients = () => {
                         }
                     </select>
                 </Col>
-                <Col xl={6} xxl={4} className='text-end'></Col>
+                <Col xl={6} xxl={4} className='text-end'>
+                </Col>
                 <Col xl={6} xxl={2} className='text-end'>
-                    <Link to='/clients/create' className='btn btn-primary btn-sm'>
+                    <Link to='/clients/create' className='btn btn-primary btn-sm mt-3'>
                         New Client <i className='feather icon-plus-circle' />
                     </Link>
                 </Col>
             </Row>
             <Row>
             {
-            !isFetching ? data?.data?.map?.((client, i) => {
+            !isLoading ? data?.data?.map?.((client, i) => {
                 const style = { width: `100%`, 'background': client.color };
                 const avatar = {
                     width: 55,

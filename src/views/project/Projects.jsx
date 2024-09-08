@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Dropdown, DropdownButton,ButtonToolbar } from "react-bootstrap";
 import {
+  useClientOptionsQuery,
   useDeleteProjectMutation,
   useProjectsQuery,
 } from "features/pmsApi";
@@ -17,11 +18,23 @@ import Avatar from "views/common/Avatar";
 
 const Projects = () => {
   useUserNotLogin();
+  const [status, setStatus] = useState('all');
+  const [client, setClient] = useState('all');
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const { data, isFetching } = useProjectsQuery({ search: search, page: page });
-    const [deleteProject, { isLoading }] = useDeleteProjectMutation();
+  const [myProjects, setMyProjects] = useState(false);
+  const clients = useClientOptionsQuery();
+  const { data, isFetching, isLoading } = useProjectsQuery({ search: search, myProjects: myProjects, client:client, status: status, page: page });
+  const [deleteProject, deleteProjectResponse] = useDeleteProjectMutation();
     
+  const statusOptions = [
+      { value: 'all', label: 'All' },
+      { value: 'archived', label: 'Archived' },
+      { value: 'finished', label: 'Finished' },
+      { value: 'ongoing', label: 'Ongoing' },
+      { value: 'onhold', label: 'On Hold' }
+  ];
+
   const deleteRow = (id) => {
     if (confirm("Are you sure you want to delete this project?")) {
       deleteProject(id);
@@ -29,25 +42,67 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
+    if (deleteProjectResponse.isLoading) {
       toast.info("Deleting Department", { position: "top-right" });
     }
-  }, [isLoading]);
+  }, [deleteProjectResponse.isLoading]);
+
   return (
     <>
-          <ToastContainer />
-      <Row className="mb-4">
-        <Col xl={6} xxl={3}>
-          <Search search={search} setSearch={setSearch} />
+      <ToastContainer />
+      <Row className="mb-4 mt-2">
+        <Col md={12} className="text-center mb-3">
+          <span style={{ marginLeft: '6px', fontSize: '10px' }} className="mt-2">
+              {isFetching && (search != '' || client != '' || status != '' || myProjects == true) ? <><div className="spinner-border text-info" style={{ width:'19px',height:'19px' }} role="status"></div></> : ''}
+          </span>
         </Col>
-        <Col xl={6} xxl={9} className="text-end">
+        <Col md={10} className="text-start mb-4">
+          <label>Client</label>
+            <select className='form-select' onChange={(e)=> setClient(e.target.value) } style={{ height: '35px',paddingTop:'6px',fontSize:'13px',width:'160px' }}>
+                <option value="all">All</option>
+                {
+                    clients?.data?.data?.map?.((client, i) => {
+                        return (
+                            <option key={i} value={client.value}>{client.label}</option>
+                        )
+                    })
+                }
+            </select>
+        </Col>
+        <Col md={2} className="text-end mb-4 mt-2">
           <Link to="/projects/create" className="btn btn-primary btn-sm">
             New Project <i className="feather icon-plus-circle" />
           </Link>
         </Col>
+        <Col md={9}>
+          <div className="form-check form-check-primary mt-2">
+            <input
+              name="my_projects"
+              className="form-check-input"
+              type="checkbox"
+              onChange={(e) => setMyProjects(!myProjects)}
+              value={myProjects}
+            />  
+            <label className="form-check-label" htmlFor="my_projects">
+              <span className="form-check-title">My Projects</span>
+            </label>
+          </div>
+        </Col>
+        <Col md={3} className="text-end d-flex justify-content-end">
+            <select className='form-select' onChange={(e)=>{setStatus(e.target.value)}} style={{ height: '33px',paddingTop:'6px',fontSize:'13px',width:'160px' }}>
+              {
+                  statusOptions?.map((option, index) => (
+                      <option key={index} value={option.value}>
+                          {option.label}
+                      </option>
+                  ))
+              }
+            </select>&nbsp;
+          <Search search={search} setSearch={setSearch} />
+        </Col>
       </Row>
       <Row>
-        {!isFetching ? (
+        {!isLoading ? (
           data?.data?.map?.((project, i) => {
             let style = { width: "60%", height: "6px", backgroundColor: project.color };
             let projectBadgeColor = { backgroundColor: project.status_color };

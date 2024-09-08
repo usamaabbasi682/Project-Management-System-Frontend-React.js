@@ -8,7 +8,7 @@ const Tasks = ({ tasks }) => {
             <Table responsive hover className="recent-users" key={1}>
                 <tbody>
                     {
-                        !tasks.isFetching ? tasks?.data?.data?.map?.((task) => {
+                        !tasks.isLoading ? tasks?.data?.data?.map?.((task) => {
                             return (
                                 <>
                                     <tr className="unread">
@@ -27,21 +27,21 @@ const Tasks = ({ tasks }) => {
                                             </div>
                                         </td>
                                         <td className='text-end'>
-                                            <Link to={`/projects/${id}/tasks/${task.id}`} title='Details'>
-                                                <i className="fa fa-info text-c-blue m-r-15" style={{ fontSize: '12px' }} />
+                                            <span className="project-badge m-r-10" style={{ backgroundColor: task.priority_color, color: 'white' }}>{task.modified_priority}</span>
+                                            <span className='text-muted m-r-10'>
+                                                <b>{ task?.due_date }</b>
+                                            </span>
+                                            <Link to={`/projects/${id}/tasks/${task.id}`} className="m-r-10" title='Details'>
+                                                <i className="fa fa-info text-c-blue" style={{ fontSize: '12px' }} />
                                             </Link>
-                                            <span className="project-badge" style={{ backgroundColor: task.priority_color, color: 'black' }}>{task.modified_priority}</span>
-                                            <span className='text-muted'>
-                                                <b>Today</b>
-                                            </span>&nbsp;&nbsp;
-                                            <Link className='text-warning' to="#">
-                                                <b>Edit</b>
+                                            <Link to={`/projects/${id}/tasks/${task.id}/edit`} className='text-warning' title='Edit'>
+                                                <i className="fa fa-edit text-c-warning" style={{ fontSize: '12px' }} />
                                             </Link>
                                         </td>
                                     </tr>
                                 </>
                             ) 
-                        }): <tr> Loading... </tr>
+                        }): ''
                     }
                 </tbody>
             </Table>

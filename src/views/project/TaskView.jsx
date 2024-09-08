@@ -20,6 +20,7 @@ const TaskView = () => {
     const [message, setMessage] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [commentEditId, setCommentEditId] = useState('');
+    console.log(data);
     
     const handleMessageSubmit = (e) => {
         e.preventDefault();
@@ -71,9 +72,6 @@ const TaskView = () => {
         }
     }
 
-    console.log(updateCommentResponse.data);
-    
-
     return (
         <>
             <Row>
@@ -99,8 +97,8 @@ const TaskView = () => {
                                         <hr className='m-0 mb-2 mt-1' />
                                         <form onSubmit={isEditing ? handleCommentUpdate : handleMessageSubmit}>
                                             <div className='form-group text-end'>
-                                                <button type="submit" disabled={commentResponse.isLoading} className="btn btn-primary btn-sm">
-                                                    {commentResponse.isLoading ? 'Loading...' : 'Save'}
+                                                <button type="submit" disabled={commentResponse.isLoading || updateCommentResponse.isLoading} className="btn btn-primary btn-sm">
+                                                    {commentResponse.isLoading || updateCommentResponse.isLoading ? 'Loading...' : 'Save'}
                                                 </button>
                                             </div>
                                             <div className="form-group">
@@ -156,6 +154,7 @@ const TaskView = () => {
                                             </ul>
                                         </div>
                                         <p style={{ fontSize: '16px' }} className='mb-0'><b>Task Duration:</b></p>
+                                        <p>{data?.data?.task_duration}</p>
                                         <p style={{ fontSize: '16px' }} className='mb-0 mt-3'><b>Settings</b></p>
                                         <p className='p-1 mb-2 rounded' style={{ backgroundColor: '#e4e8ec' }}>Start Date: <b className='text-dark'>{data?.data?.started_at}</b></p>
                                         <p className='p-1 mb-2 rounded' style={{ backgroundColor: '#e4e8ec' }}>Due Date: <b className='text-dark'>{data?.data?.due_date}</b></p>

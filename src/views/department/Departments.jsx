@@ -13,8 +13,8 @@ const Departments = () => {
   useUserNotLogin();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const { data ,isFetching } = useDepartmentsQuery({ search: search, page: page });
-  const [deleteDepartment,{isLoading}] = useDeleteDepartmentMutation();
+  const { data ,isFetching, isLoading } = useDepartmentsQuery({ search: search, page: page });
+  const [deleteDepartment,deleteDepartmentResponse] = useDeleteDepartmentMutation();
 
   const deleteRow = (id) => {
     if (confirm('Are you sure you want to delete this department?')) {
@@ -23,14 +23,19 @@ const Departments = () => {
   }
 
   useEffect(() => {
-    if (isLoading) {
+    if (deleteDepartmentResponse.isLoading) {
       toast.info("Deleting Department", { position: "top-right" });
     }
-  }, [isLoading]);
+  }, [deleteDepartmentResponse.isLoading]);
   return (
     <>
       <ToastContainer />
       <Row className='mb-4'>
+        <Col md={12} className="text-center mb-3">
+            <span style={{ marginLeft: '6px', fontSize: '10px' }} className="mt-2">
+                {isFetching && search != '' ? <><div className="spinner-border text-info" style={{ width:'19px',height:'19px' }} role="status"></div></> : ''}
+            </span>
+        </Col>
         <Col xl={6} xxl={3}>
           <Search search={search} setSearch={setSearch} />
         </Col>
@@ -42,7 +47,7 @@ const Departments = () => {
       </Row>
       <Row>
         {
-          !isFetching ? data?.data?.map?.((department, i) => {
+          !isLoading ? data?.data?.map?.((department, i) => {
             const style = { width: `100%`, 'background': department.color };
             return (
               <Col key={i} xl={6} xxl={4}>
