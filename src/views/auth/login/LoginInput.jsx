@@ -8,7 +8,7 @@ import { GOOGLE_RECAPTCHA_SITE_KEY } from 'config/constant';
 import { useNavigate } from 'react-router-dom';
 
 const LoginInput = () => {
-  const [login, { data, isLoading }] = useLoginMutation();
+  const [login, { data, isLoading,error }] = useLoginMutation();
   const [loginError, setLoginError] = useState('');
   const formikRef = useRef();
   const recaptchaRef = useRef();
@@ -27,7 +27,7 @@ const LoginInput = () => {
     recaptcha: Yup.string().required('Please verify that you are not a robot'),
   });
 
-  const handleLogin = (values, formik) => {
+  const handleLogin = (values, formik) => {    
     login(values);
     formikRef.current = formik;
   };
@@ -45,7 +45,9 @@ const LoginInput = () => {
       recaptchaRef.current.reset();
       setLoginError(data?.message);
     }
-  }, [data]);
+  }, [data]);  
+
+  console.log(error);
   
   return (
     <Formik initialValues={initialValues} validationSchema={validate} onSubmit={handleLogin}>
@@ -59,7 +61,7 @@ const LoginInput = () => {
                   <ErrorMessage name="email" component={'small'} className="text-danger form-text" />
                 </div>
                 <div className="form-group mb-3">
-                  <Field type="password" name="password" className="form-control" placeholder="Password" />
+                  <Field type="password" name="password" autoComplete="" className="form-control" placeholder="Password" />
                   <ErrorMessage name="password" component={'small'} className="text-danger form-text" />
                   {loginError && <small className="text-danger">{loginError}</small>}
                 </div>

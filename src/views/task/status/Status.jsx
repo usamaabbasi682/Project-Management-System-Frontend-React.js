@@ -163,9 +163,10 @@ const Status = () => {
                                                         }
                                                     </Formik>
                                                 </Model>
-                                                <button type="button" onClick={() => { handleDelete(status.id) }} className="border-0 btn p-0 text-danger">
-                                                    <i className="fa fa-trash"></i>
-                                                </button>
+                                                {status.allow_delete ?
+                                                    <button type="button" onClick={() => { handleDelete(status.id) }} className="border-0 btn p-0 text-danger">
+                                                        <i className="fa fa-trash"></i>
+                                                    </button> : ''}
                                             </td>
                                         </tr>);
                                 })

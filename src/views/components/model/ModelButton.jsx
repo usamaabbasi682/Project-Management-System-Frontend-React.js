@@ -1,7 +1,7 @@
-const ModelButton = ({title = "",className="btn-primary",id,icon}) => {
+const ModelButton = ({title = "", className="btn-primary", id, icon, handleClick}) => {
     return (
         <>
-            <button type="button" className={className} data-bs-toggle="modal" data-bs-target={`#${id}`} >
+            <button type="button" onClick={handleClick} className={className} data-bs-toggle="modal" data-bs-target={`#${id}`} >
                 {title} <i className={icon} />
             </button>
         </>

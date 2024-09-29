@@ -233,7 +233,13 @@ export const pmsApi = createApi({
             })
         }),
         'taskComments': builder.query({
-            query:(data) => `/projects/${data.projectId}/tasks/${data.taskId}/comments`,
+            query: (data) => {
+                let url = `/projects/${data.projectId}/tasks/${data.taskId}/comments`;
+                return {
+                    url: url,
+                    method: "GET",
+                };
+            },
         }),
         'createTaskComment': builder.mutation({
             query: (data) => ({
@@ -273,8 +279,6 @@ export const pmsApi = createApi({
         'editStatus': builder.mutation({
             query: (data) => {
                 const url = `/statuses/${data.id}?_method=PUT`;
-                console.log(data);
-                
                 return {
                     url: url,
                     method: "POST",
@@ -295,6 +299,25 @@ export const pmsApi = createApi({
                 url: `/status/options`,
                 method: "GET",
             }),
+        }),
+        'projectsOptions': builder.query({
+            query: () => ({
+                url: `/project/options`,
+                method: "GET",
+            }),
+        }),
+        'taskBoard': builder.query({
+            query: (param) => {
+                let url = `/task-board?project=${param.project}`;
+
+                if (param.user != undefined) {
+                    url = `/task-board?project=${param.project}&user=${param.user}`;
+                }
+                return {
+                    url: url,
+                    method: "GET",
+                };
+            }
         }),
     })
 });
@@ -336,5 +359,7 @@ export const {
     useDeleteStatusMutation,
     useEditStatusMutation,
     useStatusOptionsQuery,
+    useProjectsOptionsQuery,
+    useTaskBoardQuery,
 } = pmsApi;
 

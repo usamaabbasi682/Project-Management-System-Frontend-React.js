@@ -1,10 +1,10 @@
 
 
-const Model = ({children,id,title}) => {
+const Model = ({children,id,title,modelSize='model-md',marginRight=""}) => {
     return (
         <>
-        <div className="modal fade text-start" id={id} tabIndex={-1}  aria-hidden="true">
-            <div className="modal-dialog">
+        <div className="modal fade text-start w-100" id={id} tabIndex={-1}  aria-hidden="true">
+            <div className={`modal-dialog ${modelSize}`} style={{ marginRight:marginRight }}>
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5">{ title }</h1>
