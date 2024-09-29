@@ -163,21 +163,6 @@ const routes = [
         element: lazy(() => import('./views/tables/BootstrapTable'))
       },
       {
-        exact: 'true',
-        path: '/charts/nvd3',
-        element: lazy(() => import('./views/charts/nvd3-chart'))
-      },
-      {
-        exact: 'true',
-        path: '/maps/google-map',
-        element: lazy(() => import('./views/maps/GoogleMaps'))
-      },
-      {
-        exact: 'true',
-        path: '/sample-page',
-        element: lazy(() => import('./views/extra/SamplePage'))
-      },
-      {
         path: '*',
         exact: 'true',
         element: () => <Navigate to={BASE_URL} />

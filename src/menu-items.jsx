@@ -224,56 +224,6 @@ const menuItems = {
         }
       ]
     },
-    {
-      id: 'chart-maps',
-      title: 'Chart & Maps',
-      type: 'group',
-      icon: 'icon-charts',
-      children: [
-        {
-          id: 'charts',
-          title: 'Charts',
-          type: 'item',
-          icon: 'feather icon-pie-chart',
-          url: '/charts/nvd3',
-          display:true
-        },
-        {
-          id: 'maps',
-          title: 'Maps',
-          type: 'item',
-          icon: 'feather icon-map',
-          url: '/maps/google-map',
-          display:true
-        }
-      ]
-    },
-    {
-      id: 'pages',
-      title: 'Pages',
-      type: 'group',
-      icon: 'icon-pages',
-      children: [
-        {
-          id: 'sample-page',
-          title: 'Sample Page',
-          type: 'item',
-          url: '/sample-page',
-          classes: 'nav-item',
-          icon: 'feather icon-sidebar',
-          display:true
-        },
-        {
-          id: 'disabled-menu',
-          title: 'Disabled Menu',
-          type: 'item',
-          url: '#',
-          classes: 'nav-item disabled',
-          icon: 'feather icon-power',
-          display:true
-        }
-      ]
-    }
   ]
 };
 
