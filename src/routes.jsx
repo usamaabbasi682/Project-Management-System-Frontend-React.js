@@ -123,6 +123,26 @@ const routes = [
         element: lazy(() => import('./views/task/status/Status'))
       },
       {
+        exact: 'false',
+        path: '/users',
+        element: lazy(() => import('./views/user/User'))
+      },
+      {
+        exact: 'false',
+        path: '/users/create',
+        element: lazy(() => import('./views/user/Create'))
+      },
+      {
+        exact: 'false',
+        path: '/users/:id/edit',
+        element: lazy(() => import('./views/user/Edit'))
+      },
+      {
+        exact: 'false',
+        path: '/users/:id',
+        element: lazy(() => import('./views/user/View'))
+      },
+      {
         exact: 'true',
         path: '/basic/button',
         element: lazy(() => import('./views/ui-elements/basic/BasicButton'))

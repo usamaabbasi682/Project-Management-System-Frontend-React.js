@@ -79,6 +79,7 @@ const Edit = () => {
     if (updateObj.data?.success) {
       refetch();
       clientRef?.current?.setSubmitting(false);
+      clientRef?.current?.resetForm(['password', 'confirm_password']);
       toast.success("Department Updated Successfully", {
         position: "top-right",
       });

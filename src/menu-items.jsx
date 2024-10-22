@@ -142,85 +142,125 @@ const menuItems = {
         }
       ]
     },
-    {
-      id: 'ui-element',
-      title: 'UI ELEMENT',
+    // {
+    //   id: 'ui-element',
+    //   title: 'UI ELEMENT',
+    //   type: 'group',
+    //   icon: 'icon-ui',
+    //   children: [
+    //     {
+    //       id: 'component',
+    //       title: 'Component',
+    //       type: 'collapse',
+    //       icon: 'feather icon-box',
+    //       children: [
+    //         {
+    //           id: 'button',
+    //           title: 'Button',
+    //           type: 'item',
+    //           url: '/basic/button',
+    //           display:true
+    //         },
+    //         {
+    //           id: 'badges',
+    //           title: 'Badges',
+    //           type: 'item',
+    //           url: '/basic/badges',
+    //           display:true
+    //         },
+    //         {
+    //           id: 'breadcrumb',
+    //           title: 'Breadcrumb & Pagination',
+    //           type: 'item',
+    //           url: '/basic/breadcrumb-paging',
+    //           display:true
+    //         },
+    //         {
+    //           id: 'collapse',
+    //           title: 'Collapse',
+    //           type: 'item',
+    //           url: '/basic/collapse',
+    //           display:true
+    //         },
+    //         {
+    //           id: 'tabs-pills',
+    //           title: 'Tabs & Pills',
+    //           type: 'item',
+    //           url: '/basic/tabs-pills',
+    //           display:true
+    //         },
+    //         {
+    //           id: 'typography',
+    //           title: 'Typography',
+    //           type: 'item',
+    //           url: '/basic/typography',
+    //           display:true
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   id: 'ui-forms',
+    //   title: 'FORMS & TABLES',
+    //   type: 'group',
+    //   icon: 'icon-group',
+    //   children: [
+    //     {
+    //       id: 'forms',
+    //       title: 'Form Elements',
+    //       type: 'item',
+    //       icon: 'feather icon-file-text',
+    //       url: '/forms/form-basic',
+    //       display:true
+    //     },
+    //     {
+    //       id: 'table',
+    //       title: 'Table',
+    //       type: 'item',
+    //       icon: 'feather icon-server',
+    //       url: '/tables/bootstrap',
+    //       display:true
+    //     }
+    //   ]
+    // },
+        {
+      id: 'other',
+      title: 'Other Details',
       type: 'group',
-      icon: 'icon-ui',
+      icon: 'icon-navigation',
       children: [
         {
-          id: 'component',
-          title: 'Component',
-          type: 'collapse',
-          icon: 'feather icon-box',
-          children: [
-            {
-              id: 'button',
-              title: 'Button',
-              type: 'item',
-              url: '/basic/button',
-              display:true
-            },
-            {
-              id: 'badges',
-              title: 'Badges',
-              type: 'item',
-              url: '/basic/badges',
-              display:true
-            },
-            {
-              id: 'breadcrumb',
-              title: 'Breadcrumb & Pagination',
-              type: 'item',
-              url: '/basic/breadcrumb-paging',
-              display:true
-            },
-            {
-              id: 'collapse',
-              title: 'Collapse',
-              type: 'item',
-              url: '/basic/collapse',
-              display:true
-            },
-            {
-              id: 'tabs-pills',
-              title: 'Tabs & Pills',
-              type: 'item',
-              url: '/basic/tabs-pills',
-              display:true
-            },
-            {
-              id: 'typography',
-              title: 'Typography',
-              type: 'item',
-              url: '/basic/typography',
-              display:true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'ui-forms',
-      title: 'FORMS & TABLES',
-      type: 'group',
-      icon: 'icon-group',
-      children: [
-        {
-          id: 'forms',
-          title: 'Form Elements',
+          id: 'users',
+          title: 'Users',
           type: 'item',
-          icon: 'feather icon-file-text',
-          url: '/forms/form-basic',
+          icon: 'feather icon-users',
+          url: '/users',
           display:true
         },
         {
-          id: 'table',
-          title: 'Table',
+          id: 'user_create',
+          title: 'Create User',
           type: 'item',
-          icon: 'feather icon-server',
-          url: '/tables/bootstrap',
-          display:true
+          icon: 'feather icon-grid',
+          url: '/users/create',
+          display:false
+        },
+        {
+          id: 'user_edit',
+          title: 'Edit User',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/users/:id/edit',
+          display:false
+        },
+        {
+          id: 'user_view',
+          title: 'View User',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/users/:id',
+          display:false
         }
       ]
     },

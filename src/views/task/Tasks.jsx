@@ -21,7 +21,8 @@ const Tasks = () => {
     const [user, setUser] = useState('');
     const { data, isLoading, isFetching, refetch } = useTaskBoardQuery({ project: project?.value, user: user?.value });
     const users = useUserOptionsQuery();
-
+    console.log(data);
+    
     const comments = useTaskCommentsQuery({ projectId: project?.value, taskId: currentTask });
     const [isEditing, setIsEditing] = useState(false);
     const [commentEditId, setCommentEditId] = useState('');
@@ -170,10 +171,10 @@ const Tasks = () => {
                                                                     <span>{task?.time_left}</span>
                                                                     <div>
                                                                         <span>
-                                                                            <i className="fa fa-solid fa-paperclip"></i> {task?.files > 0 ? task?.files_count : '0'}
+                                                                            <i className="fa fa-solid fa-paperclip"></i> {task?.files_count > 0 ? task?.files_count : '0'}
                                                                         </span>&nbsp;
                                                                         <span>
-                                                                            <i className="fa fa-comment"></i> {task?.comments > 0 ? task?.comments_count : '0'}
+                                                                            <i className="fa fa-comment"></i> {task?.comments_count > 0 ? task?.comments_count : '0'}
                                                                         </span>
                                                                     </div>
                                                                 </div>

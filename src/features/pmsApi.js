@@ -10,7 +10,7 @@ export const pmsApi = createApi({
         return headers;
     }
     }),
-    tagTypes: ['Department','Client','Project', 'Task','Status'],
+    tagTypes: ['Department','Client','Project', 'Task','Status','User', 'TaskBoard'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
@@ -216,7 +216,8 @@ export const pmsApi = createApi({
                     method: "POST",
                     body: data.task
                 };
-            }
+            },
+            invalidatesTags: ['User','TaskBoard']
         }),
         'editTask': builder.mutation({
             query: (data) => ({
@@ -224,13 +225,14 @@ export const pmsApi = createApi({
                 method: "POST",
                 body: data.task
             }),
-            invalidatesTags: ['Task']
+            invalidatesTags: ['Task','User','TaskBoard']
         }),
         'deleteTaskFile': builder.mutation({
             query: (data) => ({
                 url: `/projects/${data.projectId}/tasks/${data.taskId}/files/${data.fileId}/delete`,
                 method: "DELETE",
-            })
+            }),
+            invalidatesTags: ['TaskBoard']
         }),
         'taskComments': builder.query({
             query: (data) => {
@@ -246,7 +248,8 @@ export const pmsApi = createApi({
                 url: `/projects/${data.projectId}/tasks/${data.taskId}/comments`,
                 method: "POST",
                 body: data.comment
-            })
+            }),
+            invalidatesTags: ['TaskBoard']
         }),
         'editTaskComment': builder.mutation({
             query: (data) => ({
@@ -259,7 +262,8 @@ export const pmsApi = createApi({
             query: (data) => ({
                 url: `/projects/${data.projectId}/tasks/${data.taskId}/comments/${data.commentId}/delete`,
                 method: "DELETE",
-            })
+            }),
+            invalidatesTags: ['TaskBoard']
         }),
         'statuses': builder.query({
             query: (data) => ({
@@ -317,7 +321,45 @@ export const pmsApi = createApi({
                     url: url,
                     method: "GET",
                 };
-            }
+            },
+            providesTags: ['TaskBoard']
+        }),
+        'users': builder.query({
+            query: (data) => ({
+                url: `/users?search=${data.search}&page=${data.page}`,
+                method: "GET",
+            }),
+            providesTags: ['User']
+        }),
+        'user': builder.query({
+            query: (id) => ({
+                url: `/users/${id}`,
+                method: "GET",
+            }),
+            providesTags: ['User']
+        }),
+        'createUser': builder.mutation({
+            query: (data) => ({
+                url: `/users`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['User']
+        }),
+        'editUser': builder.mutation({
+            query: (data) => ({
+                url: `/users/${data.id}?_method=PUT`,
+                method: "POST",
+                body: data.user
+            }),
+            invalidatesTags: ['User']
+        }),
+        'deleteUser': builder.mutation({
+            query: (id) => ({
+                url: `/users/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['User']
         }),
     })
 });
@@ -361,5 +403,10 @@ export const {
     useStatusOptionsQuery,
     useProjectsOptionsQuery,
     useTaskBoardQuery,
+    useUsersQuery,
+    useCreateUserMutation,
+    useDeleteUserMutation,
+    useUserQuery,
+    useEditUserMutation,
 } = pmsApi;
 
