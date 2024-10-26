@@ -12,7 +12,7 @@ const TaskView = () => {
     const { data, refetch, isFetching } = useViewTaskQuery({ projectId: projectId, taskId: taskId });
     
     const comments = useTaskCommentsQuery({ projectId: projectId, taskId: taskId });
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     const [message, setMessage] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [commentEditId, setCommentEditId] = useState('');
@@ -52,11 +52,11 @@ const TaskView = () => {
                                         />
                                         <Comment
                                             comments={comments}
-                                            userId={user.id}
+                                            userId={user?.id}
                                             setMessage={setMessage}
                                             setIsEditing={setIsEditing}
                                             setCommentEditId={setCommentEditId}
-                                            />
+                                        />
                                     </Col>
                                     <Col md="4">
                                         <p style={{ fontSize: '16px' }} className='mb-0'><b>Assignee:</b></p>

@@ -37,8 +37,8 @@ const LoginInput = () => {
         formikRef?.current?.setSubmitting(false);
         formikRef?.current?.resetForm();
         recaptchaRef.current.reset();
-        sessionStorage.setItem('token', data?.token);
-        sessionStorage.setItem('user', JSON.stringify(data?.data));
+        localStorage.setItem('token', data?.token);
+        localStorage.setItem('user', JSON.stringify(data?.data));
         navigate('/dashboard');
     } else {
       formikRef?.current?.setSubmitting(false);

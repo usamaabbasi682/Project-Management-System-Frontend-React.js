@@ -11,8 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 const User = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
-    const { data, isLoading, isFetching } = useUsersQuery({ search: search, page: page });
-    const [deleteUser,deleteResponse] = useDeleteUserMutation();
+    const [status, setStatus] = useState('');
+    const { data, isLoading, isFetching } = useUsersQuery({ search: search, page: page, status: status });
+    const [deleteUser, deleteResponse] = useDeleteUserMutation();
 
     const handleDelete = (id) => {
         if (confirm('Are you sure you want to delete this user?')) {
@@ -35,10 +36,16 @@ const User = () => {
                         {isFetching && (search != '') ? <><div className="spinner-border text-info" style={{ width:'19px',height:'19px' }} role="status"></div></> : ''}
                     </span>
                 </Col>
-                <Col xl={6} xxl={3}>
+                <Col md="3" className="de">
                     <Search search={search} setSearch={setSearch} />
                 </Col>
-                <Col xl={6} xxl={9} className='text-end'>
+                <Col md="3" className="de">
+                    <select name="status" id="status" onChange={(e)=>{setStatus(e.target.value)}} className="form-select form-select-sm">
+                        <option value={1}>Active</option>
+                        <option value={0}>Inactive</option>
+                    </select>
+                </Col>
+                <Col md="6" className='text-end'>
                     <Link to='/users/create' className='btn btn-primary btn-sm'>
                         New User <i className='feather icon-users' />
                     </Link>

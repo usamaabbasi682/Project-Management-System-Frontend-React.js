@@ -85,8 +85,6 @@ const Create = () => {
             userRef?.current?.setSubmitting(false);
         }
     }, [data]);
-    console.log(data);
-    
         
     return (
         <>

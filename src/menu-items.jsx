@@ -261,6 +261,30 @@ const menuItems = {
           icon: 'feather icon-grid',
           url: '/users/:id',
           display:false
+        },
+        {
+          id: 'roles',
+          title: 'Roles',
+          type: 'item',
+          icon: 'feather icon-user',
+          url: '/roles',
+          display:true
+        },
+        {
+          id: 'roles_create',
+          title: 'Create Role',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/roles/create',
+          display:false
+        },
+        {
+          id: 'roles_edit',
+          title: 'Edit Role',
+          type: 'item',
+          icon: 'feather icon-grid',
+          url: '/roles/:id/edit',
+          display:false
         }
       ]
     },

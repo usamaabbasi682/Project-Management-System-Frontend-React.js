@@ -6,7 +6,7 @@ const useUserLogin = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setAuth(sessionStorage.getItem('token'));
+        setAuth(localStorage.getItem('token'));
         if (auth != null) {
             navigate('/admin/index');
         }

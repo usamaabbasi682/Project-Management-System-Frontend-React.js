@@ -2,15 +2,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const pmsApi = createApi({
     reducerPath: "pmsApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api",prepareHeaders: (headers, { getState }) => {
-        const token = sessionStorage.getItem('token');
-        if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
+    baseQuery: fetchBaseQuery(
+        {
+            baseUrl: "http://127.0.0.1:8000/api",
+            prepareHeaders: (headers, { getState }) => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    headers.set('Authorization', `Bearer ${token}`);
+                }
+                return headers;
+            }
         }
-        return headers;
-    }
-    }),
-    tagTypes: ['Department','Client','Project', 'Task','Status','User', 'TaskBoard'],
+    ),
+    tagTypes: ['Department','Client','Project', 'Task', 'Status', 'User', 'TaskBoard', 'Role'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
@@ -326,7 +330,7 @@ export const pmsApi = createApi({
         }),
         'users': builder.query({
             query: (data) => ({
-                url: `/users?search=${data.search}&page=${data.page}`,
+                url: `/users?search=${data.search}&page=${data.page}${data.status ? '&status='+data.status : ''}`,
                 method: "GET",
             }),
             providesTags: ['User']
@@ -361,6 +365,43 @@ export const pmsApi = createApi({
             }),
             invalidatesTags: ['User']
         }),
+        'roles': builder.query({
+            query: (data) => ({
+                url: `/roles?search=${data.search}&page=${data.page}`,
+                method: "GET",
+            }),
+            providesTags: ['Role']
+        }),
+        'createRole': builder.mutation({
+            query: (data) => ({
+                url: `/roles`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Role']
+        }),
+        'role': builder.query({
+            query: (id) => ({
+                url: `/roles/${id}`,
+                method: "GET",
+            }),
+            providesTags: ['Role']
+        }),
+        'editRole': builder.mutation({
+            query: (data) => ({
+                url: `/roles/${data.id}?_method=PUT`,
+                method: "POST",
+                body: data.role
+            }),
+            invalidatesTags: ['Role']
+        }),
+        'deleteRole': builder.mutation({
+            query: (id) => ({
+                url: `/roles/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ['Role']
+        })
     })
 });
 
@@ -408,5 +449,10 @@ export const {
     useDeleteUserMutation,
     useUserQuery,
     useEditUserMutation,
+    useRolesQuery,
+    useCreateRoleMutation,
+    useDeleteRoleMutation,
+    useEditRoleMutation,
+    useRoleQuery,
 } = pmsApi;
 
