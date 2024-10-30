@@ -27,6 +27,12 @@ export const pmsApi = createApi({
                 }
             })
         }),
+        'logout': builder.mutation({
+            query: () => ({
+                url: "/logout",
+                method: "POST",
+            })
+        }),
         'departments': builder.query({
             query: (param) => ({
                 url: `/departments?search=${param.search}&page=${param.page}`,
@@ -407,6 +413,7 @@ export const pmsApi = createApi({
 
 export const {
     useLoginMutation,
+    useLogoutMutation,
     useDepartmentsQuery,
     useCreateDepartmentMutation,
     useEditDepartmentMutation,
