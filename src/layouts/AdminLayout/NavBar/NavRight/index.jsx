@@ -13,7 +13,7 @@ import { useLogoutMutation } from 'features/pmsApi';
 import Spinner from 'views/common/Spinner';
 
 const NavRight = () => {
-  const [logout, {isLoading,isFetching}] = useLogoutMutation();
+  const [logout, {data,isLoading}] = useLogoutMutation();
   const [listOpen, setListOpen] = useState(false);
   const user = localStorage.getItem('user');
   const userData = JSON.parse(user);
@@ -44,12 +44,12 @@ const NavRight = () => {
   }
 
   useEffect(() => {
-    if (isLoading) {
+    if (data?.success) {
       localStorage.clear();
       window.location.href = '/login';
     }
-  }, [isLoading]);
-
+  }, [data]);
+  
   return (
     <React.Fragment>
       <ListGroup as="ul" bsPrefix=" " className="navbar-nav ml-auto" id="navbar-right">
